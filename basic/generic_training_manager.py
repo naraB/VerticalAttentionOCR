@@ -566,12 +566,19 @@ class GenericTrainingManager:
         t = tqdm(loader)
         t.set_description("Prediction")
         begin_time = time()
+        X, Y, Y_HAT = []
+
         with torch.no_grad():
             for ind_batch, batch_data in enumerate(t):
                 # iterates over batch data
                 self.latest_batch = ind_batch + 1
                 # eval batch data and compute metrics
-                batch_metrics = self.evaluate_batch(batch_data, metrics_name)
+
+                batch_metrics, pred_lines = self.evaluate_batch(batch_data, metrics_name)
+                X.append(batch_data["imgs"][0].permute(1,2,0).cpu().detach().numpy().astype(np.uint8))
+                Y_HAT.append(pred_lines)
+                Y.append(batch_data["raw_labels"])
+
                 batch_metrics["names"] = batch_data["names"]
                 batch_metrics["ids"] = batch_data["ids"]
                 # merge batch metrics if Distributed Data Parallel is used
@@ -596,6 +603,7 @@ class GenericTrainingManager:
                         f.write(info)
                     del metrics[name]
             self.output(metrics, custom_name)
+        return X, Y, Y_HAT
 
     def launch_ddp(self):
         """

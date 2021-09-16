@@ -158,12 +158,12 @@ class Manager(GenericTrainingManager):
             if torch.equal(ind_pred, torch.ones(ind_pred.size()).to(self.device).long()*self.dataset.tokens["blank"]):
                 break
 
-        metrics = self.compute_metrics(preds, batch_data["raw_labels"], metric_names, from_line=True)
+        metrics, pred_lines = self.compute_metrics(preds, batch_data["raw_labels"], metric_names, from_line=True)
         if "diff_len" in metric_names:
             end_pred = [end_pred[k] if end_pred[k] is not None else i for k in range(len(end_pred))]
             diff_len = np.array(end_pred)-np.array(batch_data["nb_lines"])
             metrics["diff_len"] = diff_len
-        return metrics
+        return metrics, pred_lines
 
     def ctc_remove_successives_identical_ind(self, ind):
         res = []
@@ -189,4 +189,4 @@ class Manager(GenericTrainingManager):
                 metrics[metric_name] = edit_wer_from_list(str_y, str_x)
                 metrics["nb_words"] = nb_words_from_list(str_y)
         metrics["nb_samples"] = len(str_x)
-        return metrics
+        return metrics, str_x

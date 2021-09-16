@@ -145,14 +145,14 @@ class DatasetManager:
                                                  shuffle=False, num_workers=self.params["num_gpu"], pin_memory=True,
                                                  drop_last=False, collate_fn=self.my_collate_function)
 
-    def generate_test_loader(self, custom_name, sets_list):
+    def generate_test_loader(self, custom_name, sets_list): #custom_name: "IAM-test", sets_list: [("IAM", "test" )]
         if custom_name in self.test_loaders.keys():
             return
         paths_and_sets = list()
-        for set_info in sets_list:
+        for set_info in sets_list: 
             paths_and_sets.append({
-                "path": self.params["datasets"][set_info[0]],
-                "set_name": set_info[1]
+                "path": self.params["datasets"][set_info[0]], # "../../../Datasets/formatted/IAM_paragraph"
+                "set_name": set_info[1] # test
             })
         self.test_datasets[custom_name] = self.dataset_class(self.params, "test", custom_name, paths_and_sets)
         if self.dataset_class is OCRDataset:
@@ -163,7 +163,7 @@ class DatasetManager:
                                                              num_replicas=self.params["num_gpu"],
                                                              rank=self.params["ddp_rank"], shuffle=False) \
             if self.params["use_ddp"] else None
-        self.test_loaders[custom_name] = DataLoader(self.test_datasets[custom_name], batch_size=self.params["batch_size"],
+        self.test_loaders[custom_name] = DataLoader(self.test_datasets[custom_name], batch_size=1,
                                                     sampler=self.test_samplers[custom_name],
                                                     shuffle=False, num_workers=self.params["num_gpu"], pin_memory=True,
                                                     drop_last=False, collate_fn=self.my_collate_function)

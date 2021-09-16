@@ -58,7 +58,7 @@ def train_and_test(rank, params):
     metrics = ["cer", "wer", "diff_len", "time", "worst_cer"]
     for dataset_name in params["dataset_params"]["datasets"].keys():
         for set_name in ["train", "valid", "test"]:
-            model.predict("{}-{}".format(dataset_name, set_name), [(dataset_name, set_name), ], metrics, output=True)
+            X, Y, YHAT = model.predict("{}-{}".format(dataset_name, set_name), [(dataset_name, set_name), ], metrics, output=True)
 
 
 if __name__ == "__main__":
