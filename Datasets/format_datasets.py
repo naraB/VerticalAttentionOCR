@@ -588,8 +588,8 @@ def format_scribblelens_line():
 
 if __name__ == "__main__":
 
-    format_IAM_line()
-    # format_IAM_paragraph()
+    # format_IAM_line()
+    format_IAM_paragraph()
 
     # format_RIMES_line()
     # format_RIMES_paragraph()

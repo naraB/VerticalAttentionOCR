@@ -90,7 +90,6 @@ class GenericTrainingManager:
         output_path = os.path.join("outputs", self.params["training_params"]["output_folder"])
         os.makedirs(output_path, exist_ok=True)
         checkpoints_path = os.path.join(output_path, "checkpoints")
-        print(checkpoints_path)
         os.makedirs(checkpoints_path, exist_ok=True)
         results_path = os.path.join(output_path, "results")
         os.makedirs(results_path, exist_ok=True)

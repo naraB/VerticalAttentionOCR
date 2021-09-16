@@ -151,13 +151,13 @@ if __name__ == "__main__":
                 "attention": VerticalAttention,
                 "decoder": LineDecoderCTC,
             },
-            "transfer_learning": None,
-            # "transfer_learning": {
+            # "transfer_learning": None,
+            "transfer_learning": {
             #     # model_name: [state_dict_name, checkpoint_path, learnable, strict]
-            #     "encoder": ["encoder", "../../line_OCR/ctc/outputs/iam/checkpoints/best_XX.pt", True, True],
-            #     "decoder": ["decoder", "../../line_OCR/ctc/outputs/iam/checkpoints/best_XX.pt", True, True],
-            #
-            # },
+                 "encoder": ["encoder", "../../../outputs/iam/checkpoints/iam_paragraph.pt", False, True],
+                 "decoder": ["decoder", "../../../outputs/iam/checkpoints/iam_paragraph.pt", False, True],
+                 "attention": ["attention", "../../../outputs/iam/checkpoints/iam_paragraph.pt", False, True],
+            },
             "input_channels": 3,  # 3 for RGB images, 1 for grayscale images
 
             # dropout probability for standard dropout (half dropout probability is taken for spatial dropout)
