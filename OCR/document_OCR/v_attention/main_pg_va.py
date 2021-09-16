@@ -41,6 +41,7 @@ from basic.models import FCN_Encoder
 from basic.generic_dataset_manager import OCRDataset
 import torch
 import torch.multiprocessing as mp
+import os
 
 
 def train_and_test(rank, params):
@@ -64,6 +65,7 @@ def train_and_test(rank, params):
 if __name__ == "__main__":
 
     dataset_name = "IAM"  # ["RIMES", "IAM", "READ_2016"]
+    dir_path = os.path.dirname(os.path.realpath(__file__))
 
     params = {
         "dataset_params": {
