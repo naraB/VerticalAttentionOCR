@@ -41,14 +41,13 @@ from basic.models import FCN_Encoder
 from basic.generic_dataset_manager import OCRDataset
 import torch
 import torch.multiprocessing as mp
-import os
 
 
 def train_and_test(rank, params):
     params["training_params"]["ddp_rank"] = rank
     model = Manager(params)
     # Model trains until max_time_training or max_nb_epochs is reached
-    model.train()
+    # model.train()
 
     # load weights giving best CER on valid set
     model.params["training_params"]["load_epoch"] = "best"
@@ -65,7 +64,6 @@ def train_and_test(rank, params):
 if __name__ == "__main__":
 
     dataset_name = "IAM"  # ["RIMES", "IAM", "READ_2016"]
-    dir_path = os.path.dirname(os.path.realpath(__file__))
 
     params = {
         "dataset_params": {
